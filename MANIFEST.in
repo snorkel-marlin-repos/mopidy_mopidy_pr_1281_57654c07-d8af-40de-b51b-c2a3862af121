@@ -1,0 +1,20 @@
+include *.py
+include *.rst
+include *.txt
+include .mailmap
+include .travis.yml
+include AUTHORS
+include LICENSE
+include MANIFEST.in
+include tox.ini
+
+recursive-include docs *
+prune docs/_build
+
+recursive-include extra *
+
+recursive-include mopidy *.conf
+recursive-include mopidy/http/data *
+
+recursive-include tests *.py
+recursive-include tests/data *

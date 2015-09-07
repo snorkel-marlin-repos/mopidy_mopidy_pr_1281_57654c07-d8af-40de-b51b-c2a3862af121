@@ -1,0 +1,43 @@
+sudo: false
+
+language: python
+
+python:
+  - "2.7_with_system_site_packages"
+
+addons:
+  apt:
+    sources:
+      - mopidy-stable
+    packages:
+      - graphviz-dev
+      - mopidy
+
+env:
+  - TOX_ENV=py27
+  - TOX_ENV=py27-tornado23
+  - TOX_ENV=py27-tornado31
+  - TOX_ENV=docs
+  - TOX_ENV=flake8
+
+install:
+  - "pip install tox"
+
+script:
+  - "tox -e $TOX_ENV"
+
+after_success:
+  - "if [ $TOX_ENV == 'py27' ]; then pip install coveralls==1.0b1; coveralls; fi"
+
+branches:
+  except:
+    - debian
+
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#mopidy"
+    on_success: change
+    on_failure: change
+    use_notice: true
+    skip_join: true
